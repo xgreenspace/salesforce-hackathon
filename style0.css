@@ -1,23 +1,41 @@
 h1 {
-  color:white;
+<<<<<<< HEAD
+  color: white;
   text-align: center;
-  font-family: sans-serif;
-  padding: 50px;
+  border-color: black;
+  font-family: monospace;
+  border-width: 10px;
 }
+.quote {
+  font-weight: bold;
+  color: black;
+=======
+  color:white;
+>>>>>>> cb48daf18817e2a7c7f65d6a894d8af2dbf5eae0
+  text-align: center;
 
+}
+.description{
+
+}
 h2 {
-  color: #c21717;
+  color: white;
   text-align: center;
   font-weight: bold;
-  font-family: sans-serif;
+  font-family: monospace;
   font-size: 25px;
 }
-
-.container .row a {
-  color: black;
+h3 {
+  color: #0073B0
 }
 .jumbotron {
   background-color: #0073B0
+<<<<<<< HEAD
+}
+.button {
+  background-color: #0073B0;
+  border: none;
+=======
 }
 .jumbotron p{
   text-align: center;
@@ -33,5 +51,11 @@ footer {
   background-color: #c21717;
 }
 footer a {
+>>>>>>> cb48daf18817e2a7c7f65d6a894d8af2dbf5eae0
   color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
 }
