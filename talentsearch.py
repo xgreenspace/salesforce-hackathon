@@ -4,8 +4,11 @@ import os
 import sys
 import time
 
+import numpy as np
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
+
+from candidates import *
 
 
 class TalentSearch():
@@ -42,23 +45,75 @@ class TalentSearch():
     def search_listings(self, job):
 
         # Gets web content from a linkedIn List pretaining to a specific job search.
+        try:
+            self.driver.get(self.search_people)
+            search = self.driver.find_element_by_class_name('search-global-typeahead__input')
+            search.send_keys(job)
+            search.send_keys(Keys.ENTER)
+            time.sleep(1)
+        except:
+            print('Bots cannot access this account right now... Try again later! :(')
+            quit()
 
-        self.driver.get(self.search_people)
-        search = self.driver.find_element_by_class_name('search-global-typeahead__input')
-        search.send_keys(job)
-        search.send_keys(Keys.ENTER)
-
-        time.sleep(3)
-        # Looks through each listing
+        for i in np.arange(0, 1, .1):
+            time.sleep(1)
+            self.driver.execute_script("window.scrollTo(0,document.body.scrollHeight*{})".format(i))
         
-        profiles = []
+        # Looks through each listing
 
+        profiles = []
         max_page = 1
+
         for current_page in range(max_page):
-            names = self.driver.find_elements_by_xpath('//*[@class="search-result__result-link ember-view"]')
-            print(names)
-            for name in names:
-                print(name.get_attribite('href'))
+            # names = self.driver.find_elements_by_xpath('//*[@class="search-result__result-link ember-view"]')
+            results = self.driver.find_elements_by_class_name('search-result__result-link')
+            names = ['']
+            for result in results:
+                name = result.text.strip()
+                if self.is_valid_name:
+
+                    # Find's the names of the listings
+
+                    try:
+                        name = name[:name.index('\n')]
+                        print(name)
+                        names.append(name)
+                    except ValueError:
+                        print(name)
+                        names.append(name)
+
+                    # Open Profile of Listing
+                    print(result.get_attribute('href'))
+                    link = result.get_attribute('href')
+
+                    self.driver.execute_script("window.open('');")
+                    self.driver.switch_to_window(self.driver.window_handles[1])
+                    self.driver.get(link)
+
+                    profiles.append(Candidate(self.scan_profile(name, link)))
+
+                    self.driver.close()
+                    self.driver.switch_to_window(self.driver.window_handles[0])
+                
+                # Moves on to the next page
+                self.driver.find_element_by_class_name('artdeco-button__text').click()
+                
+    
+    def scan_profile(self, name, link):
+        summary = self.driver.find_element_by_class_name('pv-about__summary-text').text
+        current_role = self.driver.find_element_by_class_name('mt1').text
+
+        return (name, link, summary, current_role)
+
+
+    def is_valid_name(self, name, names):
+        return name and name[:name.find('\n')] != names[-1] and 'LinkedIn Member'
+
+
+
+
+
+                    
 
 
 
