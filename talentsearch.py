@@ -45,12 +45,15 @@ class TalentSearch():
     def search_listings(self, job):
 
         # Gets web content from a linkedIn List pretaining to a specific job search.
-
-        self.driver.get(self.search_people)
-        search = self.driver.find_element_by_class_name('search-global-typeahead__input')
-        search.send_keys(job)
-        search.send_keys(Keys.ENTER)
-        time.sleep(1)
+        try:
+            self.driver.get(self.search_people)
+            search = self.driver.find_element_by_class_name('search-global-typeahead__input')
+            search.send_keys(job)
+            search.send_keys(Keys.ENTER)
+            time.sleep(1)
+        except:
+            print('Bots cannot access this account right now... Try again later! :(')
+            quit()
 
         for i in np.arange(0, 1, .1):
             time.sleep(1)
@@ -87,13 +90,21 @@ class TalentSearch():
                     self.driver.switch_to_window(self.driver.window_handles[1])
                     self.driver.get(link)
 
-                    self.scan_profile()
+                    profiles.append(Candidate(self.scan_profile(name, link)))
 
                     self.driver.close()
                     self.driver.switch_to_window(self.driver.window_handles[0])
+                
+                # Moves on to the next page
+                self.driver.find_element_by_class_name('artdeco-button__text').click()
+                
     
-    def scan_profile(self):
-        pass
+    def scan_profile(self, name, link):
+        summary = self.driver.find_element_by_class_name('pv-about__summary-text').text
+        current_role = self.driver.find_element_by_class_name('mt1').text
+
+        return (name, link, summary, current_role)
+
 
     def is_valid_name(self, name, names):
         return name and name[:name.find('\n')] != names[-1] and 'LinkedIn Member'
