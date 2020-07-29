@@ -1,6 +1,7 @@
 import os
 import sys
 
+from flask import Flask, render_template
 import requests
 from bs4 import BeautifulSoup
 
@@ -22,13 +23,12 @@ class TalentSearch():
             result = requests.get('https://www.linkedin.com/search/results/people/?facetIndustry=%5B%2296%22%5D&origin=FACETED_SEARCH')
         elif jobs[job] == 'Electrical & Electronic Manufacturing':
             result = requests.get('https://www.linkedin.com/search/results/people/?facetIndustry=%5B%22112%22%5D&origin=FACETED_SEARCH')
-        else: 
+        else:
             result = ''
 
         # Accesses the website and assigns the data to a variable
         src = result.content
         soup = BeautifulSoup(src, 'html5lib')
-
         canidates_names = soup.find_all('span', attrs={'class':'name actor-name'})
 
         pretty = soup.prettify()
@@ -38,7 +38,11 @@ class TalentSearch():
         with open('page.html', 'w', encoding='utf-8') as f:
             f.write(pretty)
 
-
+app = Flask(__name__)
+@app.route('/')
+def index():
+   return render_template('home.html')
+app.run(debug=True)
 
 
 app1 = TalentSearch(2)
