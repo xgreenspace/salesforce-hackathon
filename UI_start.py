@@ -3,5 +3,7 @@ from flask import Flask, render_template, request
 
 @app.route("/home", methods=["POST"])
 def home():
-    J = request.form.get("Job")
+    Jobs = request.form.get("Jobs")
+    Experience = request.form.get("Experiece")
+    Education = request.form.get("Education")
     return render_template("home.html")
