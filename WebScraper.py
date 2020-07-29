@@ -1,7 +1,6 @@
 import os
 import sys
 
-from flask import Flask, render_template
 import requests
 from bs4 import BeautifulSoup
 
@@ -37,12 +36,5 @@ class TalentSearch():
 
         with open('page.html', 'w', encoding='utf-8') as f:
             f.write(pretty)
-
-app = Flask(__name__)
-@app.route('/')
-def index():
-   return render_template('home.html')
-app.run(debug=True)
-
 
 app1 = TalentSearch(2)
