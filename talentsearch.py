@@ -4,8 +4,11 @@ import os
 import sys
 import time
 
+import numpy as np
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
+
+from candidates import *
 
 
 class TalentSearch():
@@ -47,18 +50,59 @@ class TalentSearch():
         search = self.driver.find_element_by_class_name('search-global-typeahead__input')
         search.send_keys(job)
         search.send_keys(Keys.ENTER)
+        time.sleep(1)
 
-        time.sleep(3)
-        # Looks through each listing
+        for i in np.arange(0, 1, .1):
+            time.sleep(1)
+            self.driver.execute_script("window.scrollTo(0,document.body.scrollHeight*{})".format(i))
         
-        profiles = []
+        # Looks through each listing
 
+        profiles = []
         max_page = 1
+
         for current_page in range(max_page):
-            names = self.driver.find_elements_by_xpath('//*[@class="search-result__result-link ember-view"]')
-            print(names)
-            for name in names:
-                print(name.get_attribite('href'))
+            # names = self.driver.find_elements_by_xpath('//*[@class="search-result__result-link ember-view"]')
+            results = self.driver.find_elements_by_class_name('search-result__result-link')
+            names = ['']
+            for result in results:
+                name = result.text.strip()
+                if self.is_valid_name:
+
+                    # Find's the names of the listings
+
+                    try:
+                        name = name[:name.index('\n')]
+                        print(name)
+                        names.append(name)
+                    except ValueError:
+                        print(name)
+                        names.append(name)
+
+                    # Open Profile of Listing
+                    print(result.get_attribute('href'))
+                    link = result.get_attribute('href')
+
+                    self.driver.execute_script("window.open('');")
+                    self.driver.switch_to_window(self.driver.window_handles[1])
+                    self.driver.get(link)
+
+                    self.scan_profile()
+
+                    self.driver.close()
+                    self.driver.switch_to_window(self.driver.window_handles[0])
+    
+    def scan_profile(self):
+        pass
+
+    def is_valid_name(self, name, names):
+        return name and name[:name.find('\n')] != names[-1] and 'LinkedIn Member'
+
+
+
+
+
+                    
 
 
 
