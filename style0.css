@@ -1,5 +1,4 @@
 h1 {
-<<<<<<< HEAD
   color: white;
   text-align: center;
   border-color: black;
@@ -9,11 +8,13 @@ h1 {
 .quote {
   font-weight: bold;
   color: black;
-=======
   color:white;
->>>>>>> cb48daf18817e2a7c7f65d6a894d8af2dbf5eae0
   text-align: center;
 
+}
+img {
+  width: 100px;
+  height: 100px
 }
 .description{
 
@@ -30,12 +31,10 @@ h3 {
 }
 .jumbotron {
   background-color: #0073B0
-<<<<<<< HEAD
 }
 .button {
   background-color: #0073B0;
   border: none;
-=======
 }
 .jumbotron p{
   text-align: center;
@@ -51,7 +50,6 @@ footer {
   background-color: #c21717;
 }
 footer a {
->>>>>>> cb48daf18817e2a7c7f65d6a894d8af2dbf5eae0
   color: white;
   padding: 15px 32px;
   text-align: center;
