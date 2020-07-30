@@ -12,6 +12,10 @@ h1 {
   text-align: center;
 
 }
+img {
+  width: 100px;
+  height: 100px
+}
 .description{
 
 }
@@ -40,7 +44,13 @@ h3 {
 footer {
   background-color:#0073B0 ;
 }
+<<<<<<< HEAD
+footer a {
+  color: white;
+  padding: 15px 32px;
+=======
 footer h6  {
+>>>>>>> 91cfc9a55226a6b9d4b69f758950850c69298cda
   text-align: center;
   color: white;
 }
